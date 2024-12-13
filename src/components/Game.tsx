@@ -26,8 +26,11 @@ import { base, optimism } from "wagmi/chains";
 import { BaseError, UserRejectedRequestError } from "viem";
 */
 
-export default function Game() {
+export default function Game(
+  { title }: { title?: string } = { title: "Minesweeper" }
+) {
   const minisweeperJsUrl = "/minisweeper.js"; 
+  const gameTitle = title ? title : "Minesweeper"; 
 
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   // eslint-disable-next-line
@@ -45,13 +48,13 @@ export default function Game() {
   }, [isSDKLoaded]);
 
   if (!isSDKLoaded) {
-    return <div>Loading...</div>;
+    return <div>{gameTitle} Loading...</div>;
   }
 
   return (
     <div id="container">
-      <h1>Minesweeper by @m0nt0y4</h1>
-      <div id="game">Loading...</div>
+      <h1>{gameTitle} by @m0nt0y4</h1>
+      <div id="game">{gameTitle} Loading...</div>
       <Script 
         id="minisweeper" 
         src={minisweeperJsUrl} 
