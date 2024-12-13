@@ -31,3 +31,27 @@ body {
 
 body { margin:0; padding:0; width:100vw; height:100vh; display:flex; align-items:center; justify-content:center; }
 #container { width:240px; align-self:center; }
+.minisweeper-row { 
+  text-align:center; 
+}
+.minisweeper-cell { 
+  display:inline-block;
+  box-sizing:border-box;
+  width:11%; 
+  height:100%;
+  background-color:#f0f0f0;
+  border:2px solid #f0f0f0; 
+}
+.minisweeper-unrevealed { 
+  border:2px outset #ececec;
+  background:#c0c0c0; 
+}
+#minisweeper-controls { 
+  padding-top:12px;
+}
+#minisweeper-controls>div { 
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+  padding-bottom:6px;
+}
