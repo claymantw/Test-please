@@ -58,6 +58,7 @@ export default function Game(
         id="minisweeper" 
         src={minisweeperJsUrl} 
         onReady={() => {
+          // @ts-ignore
           startMinisweeper(document.getElementById("game"));
         }}
       ></Script>
