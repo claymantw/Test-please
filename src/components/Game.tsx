@@ -30,6 +30,7 @@ export default function Game(
   { title }: { title?: string } = { title: "Minesweeper" }
 ) {
   const appUrl = process.env.NEXT_PUBLIC_URL;
+  const minisweeperJsUrl = appUrl + "minisweeper.js"; 
 
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   // eslint-disable-next-line
@@ -54,8 +55,8 @@ export default function Game(
     <div id="container">
       <h1>{title}</h1>
       <div id="game">Loading...</div>
-      <Script src={`${appUrl}/minesweeper.js`}></Script>
-      <Script>
+      <Script id="minisweeper" src={minisweeperJsUrl}></Script>
+      <Script id="startMinisweeper">
         startMinisweeper(document.getElementById('game')); 
       </Script>
     </div>
