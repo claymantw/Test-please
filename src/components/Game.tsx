@@ -58,7 +58,7 @@ export default function Game(
         id="minisweeper" 
         src={minisweeperJsUrl} 
         onReady={() => {
-          // @ts-expect-error
+          // @ts-expect-error this function name is vanilla JS
           startMinisweeper(document.getElementById("game"));
         }}
       ></Script>
