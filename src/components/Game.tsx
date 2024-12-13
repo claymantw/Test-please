@@ -30,6 +30,7 @@ export default function Game(
   const appUrl = process.env.NEXT_PUBLIC_URL;
 
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
+  // eslint-disable-next-line
   const [context, setContext] = useState<FrameContext>();
 
   useEffect(() => {
@@ -48,7 +49,8 @@ export default function Game(
   }
 
   return (
-    <div>
+    <div id="container">
+      <h1>{title}</h1>
       <div id="game">Loading...</div>
       <script type="text/javascript" src={`${appUrl}/minesweeper.js`}></script>
       <script type="text/javascript">
