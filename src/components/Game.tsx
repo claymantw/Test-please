@@ -26,9 +26,7 @@ import { base, optimism } from "wagmi/chains";
 import { BaseError, UserRejectedRequestError } from "viem";
 */
 
-export default function Game(
-  { title }: { title?: string } = { title: "Minesweeper" }
-) {
+export default function Game() {
   const minisweeperJsUrl = "/minisweeper.js"; 
 
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
