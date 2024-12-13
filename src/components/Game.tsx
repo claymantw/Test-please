@@ -56,9 +56,7 @@ export default function Game(
       <h1>{title}</h1>
       <div id="game">Loading...</div>
       <Script id="minisweeper" src={minisweeperJsUrl}></Script>
-      <Script id="startMinisweeper">
-        startMinisweeper(document.getElementById('game')); 
-      </Script>
+      <Script id="startMinisweeper">{`startMinisweeper(document.getElementById("game"));`}</Script>
     </div>
   );
 }
