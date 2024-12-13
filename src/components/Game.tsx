@@ -1,5 +1,7 @@
 "use client";
 
+import Script from 'next/script'
+
 import { useEffect, useState } from "react";
 import sdk, {
   type FrameContext,
@@ -52,10 +54,10 @@ export default function Game(
     <div id="container">
       <h1>{title}</h1>
       <div id="game">Loading...</div>
-      <script type="text/javascript" src={`${appUrl}/minesweeper.js`}></script>
-      <script type="text/javascript">
+      <Script src={`${appUrl}/minesweeper.js`}></Script>
+      <Script>
         startMinisweeper(document.getElementById('game')); 
-      </script>
+      </Script>
     </div>
   );
 }
