@@ -29,8 +29,7 @@ import { BaseError, UserRejectedRequestError } from "viem";
 export default function Game(
   { title }: { title?: string } = { title: "Minesweeper" }
 ) {
-  const appUrl = process.env.NEXT_PUBLIC_URL;
-  const minisweeperJsUrl = appUrl + "minisweeper.js"; 
+  const minisweeperJsUrl = "/minisweeper.js"; 
 
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   // eslint-disable-next-line
