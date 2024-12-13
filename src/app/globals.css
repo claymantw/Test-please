@@ -31,6 +31,7 @@ body {
 
 body { margin:0; padding:0; width:100vw; height:100vh; display:flex; align-items:center; justify-content:center; }
 #container { width:240px; align-self:center; }
+#container h1 { padding-bottom:1rem; text-align:center; }
 .minisweeper-row { 
   text-align:center; 
 }
@@ -54,4 +55,11 @@ body { margin:0; padding:0; width:100vw; height:100vh; display:flex; align-items
   flex-direction:row;
   justify-content:space-between;
   padding-bottom:6px;
+}
+#container a { 
+  color:#7c65c1; 
+  cursor:pointer;
+}
+#contaier a:hover { 
+  text-decoration-line:underline;
 }

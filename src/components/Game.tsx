@@ -52,7 +52,7 @@ export default function Game(
 
   return (
     <div id="container">
-      <h1>{title}</h1>
+      <h1>Minesweeper by @m0nt0y4</h1>
       <div id="game">Loading...</div>
       <Script 
         id="minisweeper" 
