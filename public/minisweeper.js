@@ -230,7 +230,7 @@ const displayBoard = (element, board, marks, outcome) => {
       <div><a href="#" onclick="statsMinisweeper();return false">📊</a></div>
     </div>
     <div>
-      <div>Right-click to 🚩</div>
+      <div> </div>
       <div><a href="#" onclick="confirmRestartMinisweeper();return false">New game</a></div>
     </div>
   </div>
