@@ -7,13 +7,13 @@ const frame = {
   version: "next",
   imageUrl: `${appUrl}/opengraph-image`,
   button: {
-    title: "Launch Frame",
+    title: "Play Minesweeper",
     action: {
       type: "launch_frame",
       name: "Minesweeper",
       url: appUrl,
       splashImageUrl: `${appUrl}/splash.png`,
-      splashBackgroundColor: "#f7f7f7",
+      splashBackgroundColor: "#ffffff",
     },
   },
 };
