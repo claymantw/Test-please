@@ -8,7 +8,7 @@ export async function GET() {
       signature: "MHg0Y2RlZjJiZGU4YTVhZDVhZGVhMzIxNWQxZTkzYjlhNjZhNTJjMDZmOWIzYWNiYjA4YmQzNmFhOGE5MGE5NTdiNDk4NjVkZjFkNTNiZTE3NjcxOWEwNmI3YTEzYzIxZDg5YjU3YWIyNDBmODQ0YjMyMjBmYTcyODY4MzE5M2U5ODFi"
     },
     frame: {
-      version: "0.1.0",
+      version: "0.0.1",
       name: "Minesweeper",
       iconUrl: `${appUrl}/icon.png`,
       splashImageUrl: `${appUrl}/splash.png`,
