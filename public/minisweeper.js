@@ -294,7 +294,9 @@ const statsMinisweeper = () => {
 
 const shareStats = () => { 
   if(!farcasterSDK || !appURL) return false; 
-  const shareText = `My Minesweeper stats: 💣 ${minisweeperState.stats.games} game${minisweeperState.stats.games == 1 ? '' : 's'} played, 🏆 ${minisweeperState.stats.wins} game${minisweeperState.stats.wins == 1 ? '' : 's'} won, that's a 📊 ${(Math.round(minisweeperState.stats.wins *100) / minisweeperState.stats.games).toFixed(2)}% success rate! How many games can you win?`; 
+  const gamesPlayedSuffix = minisweeperState.stats.games == 1 ? '' : 's'; 
+  const gamesWonSuffix = minisweeperState.stats.wins == 1 ? '' : 's'; 
+  const shareText = `My Minesweeper stats: 💣 ${minisweeperState.stats.games} game${gamesPlayedSuffix} played, 🏆 ${minisweeperState.stats.wins} game${gamesWonSuffix} won, that's a 📊 ${(Math.round(minisweeperState.stats.wins *100) / minisweeperState.stats.games).toFixed(2)}% success rate! How many games can you win?`; 
   farcasterSDK.actions.openUrl(`https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}&embeds[]=${appURL}`); 
   return false; 
 }
