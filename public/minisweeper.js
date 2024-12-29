@@ -79,6 +79,10 @@ function attempt(x,y) {
   if(-1!=minisweeperState.marks.indexOf(`${x}-${y}`)) { 
     minisweeperState.marks.splice(minisweeperState.marks.indexOf(`${x}-${y}`), 1); 
   }
+  else if(marking) { 
+    mark(x,y); 
+    return false; 
+  }
   else { 
     sweep(minisweeperState.board, x, y); 
     const index = y*Math.sqrt(minisweeperState.board.length) + x; 
@@ -230,13 +234,19 @@ const displayBoard = (element, board, marks, outcome) => {
       <div><a href="#" onclick="statsMinisweeper();return false">📊</a></div>
     </div>
     <div>
-      <div> </div>
+      <div>${marking ? '<a href="#" onclick="setMarking(false);return false">🧹 Sweep</a>' : '<a href="#" onclick="setMarking(true);return false">🚩 Flag</a>'}</div>
       <div><a href="#" onclick="confirmRestartMinisweeper();return false">New game</a></div>
     </div>
   </div>
 `
     ); 
   }
+}
+
+const setMarking = (bool) => { 
+  marking = bool; 
+  goBackMinisweeper(); 
+  return false; 
 }
 
 const confirmRestartMinisweeper = () => { 
@@ -250,6 +260,7 @@ const cancelRestartMiniSweeper = () => {
 }
 
 const restartMinisweeper = () => { 
+  marking = false; 
   minisweeperState.board = makeBoard(); 
   minisweeperState.marks = []; 
   minisweeperState.stats.games++; 
@@ -314,14 +325,19 @@ const goBackMinisweeper = () => {
 }
 
 var minisweeperState; 
+var marking = false; 
 var minisweeperElement; 
 var farcasterSDK; 
 var appURL; 
 
 const startMinisweeper = (element, sdk, appUrl) => { 
   minisweeperElement = element; 
-  farcasterSDK = sdk; 
-  appURL = appUrl; 
+  if(sdk!==undefined) {
+    farcasterSDK = sdk; 
+  }
+  if(appUrl !== undefined) { 
+    appURL = appUrl; 
+  }
   minisweeperState = localStorage.getItem("minisweeperState"); 
   if(minisweeperState) { 
     minisweeperState = JSON.parse(minisweeperState); 
