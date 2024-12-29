@@ -31,6 +31,7 @@ export default function Game(
 ) {
   const minisweeperJsUrl = "/minisweeper.js"; 
   const gameTitle = title ? title : "Minesweeper"; 
+  const appUrl = process.env.NEXT_PUBLIC_URL;
 
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   // eslint-disable-next-line
@@ -60,7 +61,7 @@ export default function Game(
         src={minisweeperJsUrl} 
         onReady={() => {
           // @ts-expect-error this function name is vanilla JS
-          startMinisweeper(document.getElementById("game"));
+          startMinisweeper(document.getElementById("game"),sdk,appUrl);
         }}
       ></Script>
     </div>

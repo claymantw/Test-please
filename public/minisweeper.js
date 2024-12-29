@@ -279,12 +279,24 @@ const statsMinisweeper = () => {
       </div>
       <hr />
       <div>
-        <a href="#" onclick="goBackMinisweeper();return false" style="display:inline-block;text-align:center;width:100%">Go Back</a>
+        <div>
+          <a href="#" onclick="shareStats();return false" class="centered">Share</a>
+        </div>
+        <div>
+          <a href="#" onclick="goBackMinisweeper();return false" class="centered">Go Back</a>
+        </div>
       </div>
     </div>
 `
   ); 
   return false;
+}
+
+const shareStats = () => { 
+  if(!farcasterSDK || !appURL) return false; 
+  const shareText = `My Minesweeper stats: 💣 ${minisweeperState.stats.games} games played, 🏆 ${minisweeperState.stats.wins} games won, that's a 📊 ${(Math.round(minisweeperState.stats.wins *100) / minisweeperState.stats.games).toFixed(2)}% success rate! How many games can you win?`; 
+  farcasterSDK.actions.openUrl(`https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}&embeds[]=${appURL}`); 
+  return false; 
 }
 
 const goBackMinisweeper = () => { 
@@ -301,9 +313,13 @@ const goBackMinisweeper = () => {
 
 var minisweeperState; 
 var minisweeperElement; 
+var farcasterSDK; 
+var appURL; 
 
-const startMinisweeper = (element) => { 
+const startMinisweeper = (element, sdk, appUrl) => { 
   minisweeperElement = element; 
+  farcasterSDK = sdk; 
+  appURL = appUrl; 
   minisweeperState = localStorage.getItem("minisweeperState"); 
   if(minisweeperState) { 
     minisweeperState = JSON.parse(minisweeperState); 

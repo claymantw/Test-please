@@ -79,6 +79,11 @@ body {
   border-radius:4px; 
   line-height:1.5; 
 }
-#contaier a:hover { 
-  text-decoration-line:underline;
+#container a:hover { 
+  background-color:#7c65c1;
+  color:#fff; 
+}
+#container a.centered { 
+  text-align:center;
+  width:100%;
 }
