@@ -1,7 +1,7 @@
 "use client";
-
-import dynamic from "next/dynamic";
 /*
+import dynamic from "next/dynamic";
+
 const WagmiProvider = dynamic(
   () => import("~/components/providers/WagmiProvider"),
   {
