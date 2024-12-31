@@ -218,12 +218,20 @@ const displayBoard = (element, board, marks, outcome) => {
       <div>${outcome=="win" ? "😎 You won! Play again?" : "😵 You lost. Try again?"}</div>
     </div>
     <div>
+      <div><a href="#" id="shareOutcomeButton">Share</a></div>
       <div><a href="#" onclick="statsMinisweeper();return false">📊</a></div>
       <div><a href="#" onclick="restartMinisweeper();return false">New game</a></div>
     </div>
   </div>
 `
     ); 
+
+    document.getElementById('shareOutcomeButton').addEventListener('click',function(e) {
+      if(!farcasterSDK || !appURL) return false; 
+      const shareText = outcome=="win" ? `I just won a game of Minesweeper 😎 Want to try? Play below 👇` : `I just lost a game of Minesweeper 😭 Think you can do better? Play below 👇`; 
+      farcasterSDK.actions.openUrl(`https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}&embeds[]=${appURL}`); 
+      return false; 
+    }); 
   }
   else { 
     element.insertAdjacentHTML('beforeend', 
