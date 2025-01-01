@@ -97,11 +97,13 @@ function attempt(x,y) {
     if(minisweeperState.board[index]==9) { 
       reveal(minisweeperState.board); 
       outcome = "lose"; 
+      paused = true; 
     }
     else if(minisweeperState.board.filter(el => el > 9).length < 11) { 
       // there are only bombs left, the player has won 
       minisweeperState.stats.wins += 1; 
       outcome = "win"; 
+      paused = true; 
     }
   }
   displayBoard(minisweeperElement, minisweeperState.board, minisweeperState.marks, outcome); 
