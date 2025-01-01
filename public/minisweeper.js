@@ -75,6 +75,14 @@ function getHTMLforCell(num, x, y, marks, outcome) {
 }
 
 function attempt(x,y) {
+  if(minisweeperState.timer===undefined || paused) { 
+    if(minisweeperState.timer === undefined) { 
+      minisweeperState.timer = 0; 
+    }
+    paused = false; 
+    minisweeperState.currentTime = Date.now(); 
+    localStorage.setItem("minisweeperState", JSON.stringify(minisweeperState)); 
+  }
   let outcome; 
   if(-1!=minisweeperState.marks.indexOf(`${x}-${y}`)) { 
     minisweeperState.marks.splice(minisweeperState.marks.indexOf(`${x}-${y}`), 1); 
@@ -215,7 +223,7 @@ const displayBoard = (element, board, marks, outcome) => {
 `
   <div id="minisweeper-controls">
     <div>
-      <div>${outcome=="win" ? "😎 You won! Play again?" : "😵 You lost. Try again?"}</div>
+      <div>${outcome=="win" ? `😎 You won in ${parseInt(minisweeperState.timer/1000)}s! Play again?` : "😵 You lost. Try again?"}</div>
     </div>
     <div>
       <div><a href="#" id="shareOutcomeButton">Share</a></div>
@@ -228,7 +236,7 @@ const displayBoard = (element, board, marks, outcome) => {
 
     document.getElementById('shareOutcomeButton').addEventListener('click',function(e) {
       if(!farcasterSDK || !appURL) return false; 
-      const shareText = outcome=="win" ? `I just won a game of Minesweeper 😎 Want to try? Play below 👇` : `I just lost a game of Minesweeper 😭 Think you can do better? Play below 👇`; 
+      const shareText = outcome=="win" ? `I just won a game of Minesweeper in ${parseInt(minisweeperState.timer/1000)} seconds 😎 Want to try? Play below 👇` : `I just lost a game of Minesweeper 😭 Think you can do better? Play below 👇`; 
       farcasterSDK.actions.openUrl(`https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}&embeds[]=${appURL}`); 
       return false; 
     }); 
@@ -239,10 +247,11 @@ const displayBoard = (element, board, marks, outcome) => {
   <div id="minisweeper-controls">
     <div>
       <div>Cleared: ${clear}%</div>
-      <div><a href="#" onclick="statsMinisweeper();return false">📊</a></div>
+      <div id="minisweeper-timer">Time: ${minisweeperState.timer!==undefined ? parseInt(minisweeperState.timer/1000) : 0}s</div>
     </div>
     <div>
       <div>${marking ? '<a href="#" onclick="setMarking(false);return false">🧹 Sweep</a>' : '<a href="#" onclick="setMarking(true);return false">🚩 Flag</a>'}</div>
+      <div><a href="#" onclick="statsMinisweeper();return false">📊</a></div>
       <div><a href="#" onclick="confirmRestartMinisweeper();return false">New game</a></div>
     </div>
   </div>
@@ -258,17 +267,22 @@ const setMarking = (bool) => {
 }
 
 const confirmRestartMinisweeper = () => { 
+  paused = true; 
   displayBoard(minisweeperElement, minisweeperState.board, minisweeperState.marks, "confirm"); 
   return false;
 }
 
 const cancelRestartMiniSweeper = () => { 
+  paused = false; 
+  minisweeperState.currentTime = Date.now(); 
   displayBoard(minisweeperElement, minisweeperState.board, minisweeperState.marks);
   return false; 
 }
 
 const restartMinisweeper = () => { 
   marking = false; 
+  paused = true; 
+  minisweeperState.timer = undefined; 
   minisweeperState.board = makeBoard(); 
   minisweeperState.marks = []; 
   minisweeperState.stats.games++; 
@@ -278,6 +292,7 @@ const restartMinisweeper = () => {
 }
 
 const statsMinisweeper = () => { 
+  paused = true; 
   minisweeperElement.textContent = ''; 
   minisweeperElement.insertAdjacentHTML('beforeend', 
 `
@@ -328,6 +343,10 @@ const goBackMinisweeper = () => {
   else if(minisweeperState.board.filter(el => el > 9).length < 11) { 
     outcome = "win";
   } 
+  else { 
+    paused = false; 
+    minisweeperState.currentTime = Date.now(); 
+  }
   displayBoard(minisweeperElement, minisweeperState.board, minisweeperState.marks, outcome); 
   return false; 
 }
@@ -337,6 +356,7 @@ var marking = false;
 var minisweeperElement; 
 var farcasterSDK; 
 var appURL; 
+var paused = true; 
 
 const startMinisweeper = (element, sdk, appUrl) => { 
   minisweeperElement = element; 
@@ -349,8 +369,14 @@ const startMinisweeper = (element, sdk, appUrl) => {
   minisweeperState = localStorage.getItem("minisweeperState"); 
   if(minisweeperState) { 
     minisweeperState = JSON.parse(minisweeperState); 
+    if(!("timer" in minisweeperState)) { 
+      minisweeperState.timer = undefined; 
+    }
+    if(!("currentTime" in minisweeperState)) { 
+      minisweeperState.currentTime = Date.now(); 
+    }
   } else { 
-    minisweeperState = { board: makeBoard(), marks: [], stats: { games:1, wins: 0 }};
+    minisweeperState = { board: makeBoard(), marks: [], timer: undefined, currentTime: Date.now(), stats: { games:1, wins: 0 }};
   } 
   let outcome; 
   if(minisweeperState.board.indexOf(19)==-1) { 
@@ -361,4 +387,15 @@ const startMinisweeper = (element, sdk, appUrl) => {
   } 
   displayBoard(minisweeperElement, minisweeperState.board, minisweeperState.marks, outcome); 
   localStorage.setItem("minisweeperState", JSON.stringify(minisweeperState)); 
+  setInterval(() => { 
+    if(minisweeperState.timer!==undefined && !paused) { 
+      const newTime = Date.now(); 
+      minisweeperState.timer += newTime - minisweeperState.currentTime; 
+      minisweeperState.currentTime = newTime; 
+      localStorage.setItem("minisweeperState", JSON.stringify(minisweeperState)); 
+      try { 
+        document.getElementById('minisweeper-timer').textContent = `Time: ${parseInt(minisweeperState.timer/1000)}s`;
+      } catch(err) { }
+    }
+  },100); 
 }
