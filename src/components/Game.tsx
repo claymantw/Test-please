@@ -54,7 +54,7 @@ export default function Game(
 
   return (
     <div id="container">
-      <h1>{gameTitle} by @m0nt0y4</h1>
+      <h1 id="game-title">💣 {gameTitle} <span id="emotion">🙂</span></h1>
       <div id="game">{gameTitle} Loading...</div>
       <Script 
         id="minisweeper" 

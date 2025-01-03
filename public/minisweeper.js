@@ -227,7 +227,8 @@ const displayBoard = (element, board, marks, outcome) => {
           </div>
         </div>
       `
-          ); 
+    ); 
+    try { document.getElementById('emotion').textContent = '🤔'; } catch(err) {}
   }
   else if(outcome) { 
     element.insertAdjacentHTML('beforeend', 
@@ -251,6 +252,8 @@ const displayBoard = (element, board, marks, outcome) => {
       farcasterSDK.actions.openUrl(`https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}&embeds[]=${appURL}`); 
       return false; 
     }); 
+
+    try { document.getElementById('emotion').textContent = outcome==='win' ? '😎' : '😵'; } catch(err) {}
   }
   else { 
     element.insertAdjacentHTML('beforeend', 
@@ -268,6 +271,7 @@ const displayBoard = (element, board, marks, outcome) => {
   </div>
 `
     ); 
+    try { document.getElementById('emotion').textContent = '🙂'; } catch(err) {}
   }
 }
 
@@ -340,6 +344,8 @@ const statsMinisweeper = () => {
     </div>
 `
   ); 
+
+  try { document.getElementById('emotion').textContent = '🤓'; } catch(err) {}
   return false;
 }
 
