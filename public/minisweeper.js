@@ -104,6 +104,15 @@ function attempt(x,y) {
       minisweeperState.stats.wins += 1; 
       outcome = "win"; 
       paused = true; 
+      // get final time 
+      const newTime = Date.now(); 
+      minisweeperState.timer += newTime - minisweeperState.currentTime; 
+      if(minisweeperState.stats.fastest===undefined) { 
+        minisweeperState.stats.fastest = minisweeperState.timer; 
+      }
+      else if(minisweeperState.stats.fastest > minisweeperState.timer) { 
+        minisweeperState.stats.fastest = minisweeperState.timer; 
+      }
     }
   }
   displayBoard(minisweeperElement, minisweeperState.board, minisweeperState.marks, outcome); 
@@ -225,7 +234,7 @@ const displayBoard = (element, board, marks, outcome) => {
 `
   <div id="minisweeper-controls">
     <div>
-      <div>${outcome=="win" ? `😎 You won in ${parseInt(minisweeperState.timer/1000)}s! Play again?` : "😵 You lost. Try again?"}</div>
+      <div>${outcome=="win" ? `😎 You won in ${parseInt(minisweeperState.timer/1000)}.${parseInt(minisweeperState.timer%1000)}s! Play again?` : "😵 You lost. Try again?"}</div>
     </div>
     <div>
       <div><a href="#" id="shareOutcomeButton">Share</a></div>
@@ -238,7 +247,7 @@ const displayBoard = (element, board, marks, outcome) => {
 
     document.getElementById('shareOutcomeButton').addEventListener('click',function(e) {
       if(!farcasterSDK || !appURL) return false; 
-      const shareText = outcome=="win" ? `I just won a game of Minesweeper in ${parseInt(minisweeperState.timer/1000)} seconds 😎 Want to try? Play below 👇` : `I just lost a game of Minesweeper 😭 Think you can do better? Play below 👇`; 
+      const shareText = outcome=="win" ? `I just won a game of Minesweeper in ${parseInt(minisweeperState.timer/1000)}.${parseInt(minisweeperState.timer%1000)} seconds 😎 Want to try? Play below 👇` : `I just lost a game of Minesweeper 😭 Think you can do better? Play below 👇`; 
       farcasterSDK.actions.openUrl(`https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}&embeds[]=${appURL}`); 
       return false; 
     }); 
@@ -313,6 +322,12 @@ const statsMinisweeper = () => {
         <div>Success rate</div>
         <div>${(Math.round(minisweeperState.stats.wins *100) / minisweeperState.stats.games).toFixed(2)}%</div>
       </div>
+      ${minisweeperState.stats.fastest ? `
+      <div>
+        <div>Fastest win</div>
+        <div>${parseInt(minisweeperState.stats.fastest/1000)}.${parseInt(minisweeperState.stats.fastest%1000)}s</div>
+      </div>
+      ` : ''}
       <hr />
       <div>
         <div>
@@ -377,8 +392,11 @@ const startMinisweeper = (element, sdk, appUrl) => {
     if(!("currentTime" in minisweeperState)) { 
       minisweeperState.currentTime = Date.now(); 
     }
+    if(!("fastest" in minisweeperState.stats)) { 
+      minisweeperState.stats.fastest = undefined; 
+    }
   } else { 
-    minisweeperState = { board: makeBoard(), marks: [], timer: undefined, currentTime: Date.now(), stats: { games:1, wins: 0 }};
+    minisweeperState = { board: makeBoard(), marks: [], timer: undefined, currentTime: Date.now(), stats: { games:1, wins: 0, fastest: undefined }};
   } 
   let outcome; 
   if(minisweeperState.board.indexOf(19)==-1) { 
