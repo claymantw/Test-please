@@ -248,7 +248,7 @@ const displayBoard = (element, board, marks, outcome) => {
 
     document.getElementById('shareOutcomeButton').addEventListener('click',function(e) {
       if(!farcasterSDK || !appURL) return false; 
-      const shareText = outcome=="win" ? `I just won a game of Minesweeper in ${parseInt(minisweeperState.timer/1000)}.${parseInt(minisweeperState.timer%1000)} seconds${minisweeperState.stats.fastest===minisweeperState.timer ? ' (my fastest time so far!)' : ''} 😎 Want to try? Play below 👇` : `I just lost a game of Minesweeper 😭 Think you can do better? Play below 👇`; 
+      const shareText = outcome=="win" ? `I just won a game of Minesweeper in ${parseInt(minisweeperState.timer/1000)}.${parseInt(minisweeperState.timer%1000)} seconds${minisweeperState.stats.fastest===minisweeperState.timer ? ' (my best time so far!)' : ''} 😎 Want to try? Play below 👇` : `I just lost a game of Minesweeper 😭 Think you can do better? Play below 👇`; 
       farcasterSDK.actions.openUrl(`https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}&embeds[]=${appURL}`); 
       return false; 
     }); 
