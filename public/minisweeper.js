@@ -351,11 +351,11 @@ const statsMinisweeper = () => {
 
 const shareStats = () => { 
   if(!farcasterSDK || !appURL) return false; 
-  const gamesPlayedSuffix = minisweeperState.stats.games == 1 ? '' : 's'; 
+  // const gamesPlayedSuffix = minisweeperState.stats.games == 1 ? '' : 's'; 
   const gamesWonSuffix = minisweeperState.stats.wins == 1 ? '' : 's'; 
-  let shareText = `My 💣 Minesweeper stats: 🏆 ${minisweeperState.stats.wins} game${gamesWonSuffix} won, 📊 ${(Math.round(minisweeperState.stats.wins *100) / minisweeperState.stats.games).toFixed(2)}% win rate.`; 
+  let shareText = `My 💣 Minesweeper stats: 🏆 ${minisweeperState.stats.wins} win${gamesWonSuffix}, 📊 ${(Math.round(minisweeperState.stats.wins *100) / minisweeperState.stats.games).toFixed(2)}% win rate.`; 
   if(minisweeperState.stats.fastest) { 
-    shareText += ` Fastest win: ${parseInt(minisweeperState.stats.fastest/1000)}.${parseInt(minisweeperState.stats.fastest%1000)}s!`; 
+    shareText += ` Fastest: ${parseInt(minisweeperState.stats.fastest/1000)}.${parseInt(minisweeperState.stats.fastest%1000)}s!`; 
   }
   shareText += ` Think you can do better?`;
   farcasterSDK.actions.openUrl(`https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}&embeds[]=${appURL}`); 
