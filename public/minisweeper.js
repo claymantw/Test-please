@@ -357,7 +357,6 @@ const shareStats = () => {
   if(minisweeperState.stats.fastest) { 
     shareText += ` Fastest: ${parseInt(minisweeperState.stats.fastest/1000)}.${parseInt(minisweeperState.stats.fastest%1000)}s!`; 
   }
-  shareText += ` Play below 👇`;
   farcasterSDK.actions.openUrl(`https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}&embeds[]=${appURL}`); 
   return false; 
 }
