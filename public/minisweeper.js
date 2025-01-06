@@ -351,11 +351,11 @@ const statsMinisweeper = () => {
 
 const shareStats = () => { 
   if(!farcasterSDK || !appURL) return false; 
-  // const gamesPlayedSuffix = minisweeperState.stats.games == 1 ? '' : 's'; 
+  const gamesPlayedSuffix = minisweeperState.stats.games == 1 ? '' : 's'; 
   const gamesWonSuffix = minisweeperState.stats.wins == 1 ? '' : 's'; 
-  let shareText = `My Minesweeper stats: ${minisweeperState.stats.wins} win${gamesWonSuffix}.`; 
+  let shareText = `My Minesweeper stats: ${minisweeperState.stats.games} game${gamesPlayedSuffix}, ${minisweeperState.stats.wins} win${gamesWonSuffix}!`; 
   if(minisweeperState.stats.fastest) { 
-    shareText = `${shareText} Fastest: ${parseInt(minisweeperState.stats.fastest/1000)}.${parseInt(minisweeperState.stats.fastest%1000)}s!`; 
+    shareText = `${shareText} Fastest win: ${parseInt(minisweeperState.stats.fastest/1000)}.${parseInt(minisweeperState.stats.fastest%1000)}s!`; 
   }
   farcasterSDK.actions.openUrl(`https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}&embeds[]=${appURL}`); 
   return false; 

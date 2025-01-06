@@ -5,7 +5,7 @@ const appUrl = process.env.NEXT_PUBLIC_URL;
 
 const frame = {
   version: "next",
-  imageUrl: `${appUrl}/og-image.png`,
+  imageUrl: `${appUrl}/og-image.png?v=2`,
   button: {
     title: "Play Minesweeper",
     action: {
