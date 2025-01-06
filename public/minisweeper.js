@@ -355,7 +355,7 @@ const shareStats = () => {
   const gamesWonSuffix = minisweeperState.stats.wins == 1 ? '' : 's'; 
   let shareText = `My Minesweeper stats: ${minisweeperState.stats.wins} win${gamesWonSuffix}, 📊 ${(Math.round(minisweeperState.stats.wins *100) / minisweeperState.stats.games).toFixed(2)}% win rate.`; 
   if(minisweeperState.stats.fastest) { 
-    shareText += ` Fastest: ${parseInt(minisweeperState.stats.fastest/1000)}.${parseInt(minisweeperState.stats.fastest%1000)}s!`; 
+    shareText = `${shareText} Fastest: ${parseInt(minisweeperState.stats.fastest/1000)}.${parseInt(minisweeperState.stats.fastest%1000)}s!`; 
   }
   farcasterSDK.actions.openUrl(`https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}&embeds[]=${appURL}`); 
   return false; 
